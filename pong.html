@@ -5,72 +5,72 @@
   <script src="bootstrap.js"></script>
   <style>
   #boardone{
-  	width: 30px;
-  	height: 550px;
-  	position: absolute;
-  	margin-left: 0px;
-  	margin-top: 50px;
+    width: 30px;
+    height: 600px;
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 0px;
   }
   #boardtwo{
-  	width: 30px;
-  	height: 550px;
-  	position: absolute;
-  	float: right !important;
-  	margin-left: 79.5em;
-  	margin-top:50px;
+    width: 30px;
+    height: 600px;
+    position: absolute;
+    float: right !important;
+    margin-left: 79.5em;
+    margin-top:0px;
   }
   #ball{
-  	width: 25px;
-  	height: 25px;
-  	background-color: black;
-  	border-radius: 25px;
-  	margin-left: 450px;
-  	margin-top: 275px;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    border-radius: 25px;
+    margin-left: 550px;
+    margin-top: 275px;
   }
   #text{
-  	margin-left:400px;
-  	height: 50px;
-  	width: 100px;
-  	background-color: black;
-  	color: white;
-  	text-align: center;
-  	padding-top: 5px;
-  	position: absolute;
-  	display: inline-block;
-  	margin-top: 10px;
-  	font-size: 22px;
-  	border-radius: 5px;
-  	font-family: candara;
+    margin-left:400px;
+    height: 50px;
+    width: 100px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding-top: 5px;
+    position: absolute;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 22px;
+    border-radius: 5px;
+    font-family: candara;
   }
   #point{
-  	background-color: white;
-  	border: 1px solid black;
-  	border-radius: 5px;
-  	height: 50px;
-  	width: 50px;
-  	text-align: center;
-  	padding-top: 10px;
-  	margin-left: 520px;
-  	position: absolute;
-  	display: inline-block;
-  	margin-top: 10px;
-  	font-size: 22px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 520px;
+    position: absolute;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 22px;
   }
   #start{
-  	border-radius: 5px;
-  	height: 50px;
-  	padding-top: 5px;
-  	width: 100px;
-  	margin-left: 100px;
-  	margin-top: 10px;
-  	background-color: violet;
-  	color: white;
-  	display: inline-block;
-  	position: absolute;
-  	text-align: center;
-  	cursor: pointer;
-  	font-size: 22px;
-  	font-family: candara;
+    border-radius: 5px;
+    height: 50px;
+    padding-top: 5px;
+    width: 100px;
+    margin-left: 100px;
+    margin-top: 10px;
+    background-color: violet;
+    color: white;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    font-size: 22px;
+    font-family: candara;
   }
   </style>
 </head>
@@ -91,51 +91,54 @@ var ctxone = boardone.getContext("2d");
 var ctxtwo = boardtwo.getContext("2d");
 var point = document.getElementById("point");
 var start = document.getElementById("start");
-var j=0,oneY=0,twoY=0,pos=450,speed=2,points=0,counter=0,flag=1,pause=0,restart=0;
+var j=0,oneY=0,twoY=0,left=550,speed1=3,points=0,counter=0,flag=1,pause=0,restart=0,up=275,speed2=3,check=0;
 point.innerHTML=points;
 var request1;
 function pauseOn()
 {
-	if(pause==0&&restart==0)
-	{
-		oneY=Math.round(120*Math.random());
-		twoY=Math.round(120*Math.random());
-		ctxone.fillStyle="red";
-		ctxone.fillRect(0,oneY,200,30);
-		ctxtwo.fillStyle="blue";
-		ctxtwo.fillRect(0,twoY,200,30);
-		start.innerHTML="Pause";
-		pause++;
-		counter=0;
-		render();
-	}
-	else if(pause%2!=0&&restart==0)
-	{
-		start.innerHTML="Continue";
-		pause++;
-		counter=1;
-		window.cancelAnimationFrame(request1);
-	}
-	else if(pause%2==0&&pause!=0&&restart==0)
-	{
-		start.innerHTML="Pause";
-		pause++;
-		counter=0;
-		render();
-	}
-	else if(restart==1)
-	{
-		start.innerHTML="Restart";
-		j=0;oneY=0;twoY=0;pos=450;speed=2;points=0;counter=1;flag=1;pause=0;
-		restart=0;
-		ctxone.clearRect(0,0,200,900);
-		ctxtwo.clearRect(0,0,200,900);
-		render();
-	}
+  if(pause==0&&restart==0)
+  {
+    ctxone.clearRect(0,0,200,900);
+    ctxtwo.clearRect(0,0,200,900);
+    point.innerHTML=points;
+    oneY=Math.round(120*Math.random());
+    twoY=Math.round(120*Math.random());
+    ctxone.fillStyle="red";
+    ctxone.fillRect(0,oneY,200,30);
+    ctxtwo.fillStyle="blue";
+    ctxtwo.fillRect(0,twoY,200,30);
+    left=Math.round(300*Math.random())+400;
+    top=Math.round(600*Math.random());
+    start.innerHTML="Pause";
+    pause++;
+    counter=0;
+    render();
+  }
+  else if(pause%2!=0&&restart==0)
+  {
+    start.innerHTML="Continue";
+    pause++;
+    counter=1;
+    window.cancelAnimationFrame(request1);
+  }
+  else if(pause%2==0&&pause!=0&&restart==0)
+  {
+    start.innerHTML="Pause";
+    pause++;
+    counter=0;
+    render();
+  }
+  else if(restart==1)
+  {
+    start.innerHTML="Restart";
+    j=0;oneY=0;twoY=0;left=550;speed1=3;speed2=3;points=0;counter=1;flag=1;pause=0;up=275;check=0;
+    restart=0;
+    render();
+  }
 }
 function render()
 {
-	if(counter==1)
+  if(counter==1)
         window.cancelAnimationFrame(request1);
     else{
     drawBall();
@@ -143,111 +146,134 @@ function render()
 }
 }
 function drawBall(){
-	 pos+=speed;
-     if(pos>=1085||pos<=20)
+   left+=speed1;
+   up+=speed2;
+     if(left>=1085||left<=20)
       {
-      	if(pos>=1085)
-      	{
-      		if(twoY>=33&&twoY<=66)
-      		{
-      			points++;
-      			flag=1;
-      			point.innerHTML=points;
-      			speed=-speed;
-   	            j=j+1;
-   	            drawBoard();
-      		}
-      		else{
-      			counter=1;
-      			restart=1;
-      			alert("Game Over");
-      			pauseOn();
-      		}
-      	}
-      	else if(pos<=20)
-      	{
-      		if(oneY>=33&&oneY<=66)
-      		{
-      			points++;
-      			flag=1;
-      			point.innerHTML=points;
-      			speed=-speed;
-   	            j=j+1;
-   	            drawBoard();
-      		}
-      		else{
-      			counter=1;
-      			restart=1;
-      			alert("Game Over");
-      			pauseOn();
-      		}
-      	}
-   	  }
-   	  if(points!=0&&points%2==0&&flag==1)
-   	  {
-   	  	speed++;
-   	  	flag=0;
-   	  }
-    ball.style.marginLeft=pos+'px';
+        if(left>=1085)
+        {
+          check=4*twoY;
+          if(up>=(check-10)&&up<=(check+100))
+          {
+            points++;
+            flag=1;
+            point.innerHTML=points;
+            speed1=-speed1;
+                j=j+1;
+                drawBoard();
+          }
+          else{
+            counter=1;
+            restart=1;
+            alert("Game Over");
+            pauseOn();
+          }
+        }
+        else if(left<=20)
+        {
+          check=4*oneY;
+          if(up>=(check-10)&&up<=(check+100))
+          {
+            points++;
+            flag=1;
+            point.innerHTML=points;
+            speed1=-speed1;
+                j=j+1;
+                drawBoard();
+          }
+          else{
+            counter=1;
+            restart=1;
+            alert("Game Over");
+            pauseOn();
+          }
+        }
+      }
+      if(up<=0)
+        speed2=-speed2;
+      else if(up>=560)
+        speed2=-speed2;
+      if(points!=0&&points%2==0&&flag==1)
+      {
+        speed1++;
+        speed2++;
+        flag=0;
+      }
+    ball.style.marginLeft=left+'px';
+    ball.style.marginTop=up+'px';
     
 }
 function drawBoard()
 {
-	if(j%2!=0)
-	{
+  if(j%2!=0)
+  {
       ctxone.clearRect(0,oneY,200,100);
       oneY=Math.round(120*Math.random());
       ctxone.fillStyle="red";
       ctxone.fillRect(0,oneY,200,30);
-	}
-	else{
-		ctxtwo.clearRect(0,twoY,200,100);
-		twoY=Math.round(120*Math.random());
-		ctxtwo.fillStyle="blue";
+  }
+  else{
+    ctxtwo.clearRect(0,twoY,200,100);
+    twoY=Math.round(120*Math.random());
+    ctxtwo.fillStyle="blue";
         ctxtwo.fillRect(0,twoY,200,30);
-	}
+  }
 }
 document.body.onkeyup=function(e){
-	if(e.keyCode==40)
-	{
-		if(pause%2!=0)
-		{
-		if(j%2==0)
-		{
-			ctxtwo.clearRect(0,0,200,900);
-			twoY++;
-			ctxtwo.fillStyle="blue";
-            ctxtwo.fillRect(0,twoY,200,30);
+  if(e.keyCode==40)
+  {
+    if(oneY>=0&&oneY<=120&&twoY>=0&&twoY<=120)
+    {
+    if(pause%2!=0)
+    {
+    if(j%2==0)
+    {
+      ctxtwo.clearRect(0,0,200,900);
+      twoY+=5;
+      if(twoY>120)
+        twoY=120;
+      ctxtwo.fillStyle="blue";
+      ctxtwo.fillRect(0,twoY,200,30);
         }
         else
         {
-        	ctxone.clearRect(0,0,200,900);
-			oneY++;
-			ctxone.fillStyle="red";
-            ctxone.fillRect(0,oneY,200,30);
+          ctxone.clearRect(0,0,200,900);
+          oneY+=5;
+          if(oneY>120)
+            oneY=120;
+          ctxone.fillStyle="red";
+          ctxone.fillRect(0,oneY,200,30);
         }
     }
-	}
-	else if(e.keyCode==38)
-	{
-		if(pause%2!=0)
-		{
-		if(j%2==0)
-		{
-			ctxtwo.clearRect(0,0,200,900);
-			twoY--;
-			ctxtwo.fillStyle="blue";
-            ctxtwo.fillRect(0,twoY,200,30);
+  }
+  }
+  else if(e.keyCode==38)
+  {
+    if(oneY>=0&&oneY<=120&&twoY>=0&&twoY<=120)
+    {
+    if(pause%2!=0)
+    {
+    if(j%2==0)
+    {
+      ctxtwo.clearRect(0,0,200,900);
+      twoY-=5;
+      if(twoY<0)
+        twoY=0;
+      ctxtwo.fillStyle="blue";
+      ctxtwo.fillRect(0,twoY,200,30);
         }
         else
         {
-        	ctxone.clearRect(0,0,200,900);
-			oneY--;
-			ctxone.fillStyle="red";
-            ctxone.fillRect(0,oneY,200,30);
+          ctxone.clearRect(0,0,200,900);
+          oneY-=5;
+          if(oneY<0)
+            oneY=0;
+          ctxone.fillStyle="red";
+          ctxone.fillRect(0,oneY,200,30);
         }
+      }
     }
-	}
+  }
 }
 </script>
 </body>
